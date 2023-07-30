@@ -1,0 +1,50 @@
+{% extends 'main.html' %} 
+{% block title %}
+<title>Home</title>
+{% endblock title %}
+{% block body %}
+{# ye delete message ka code hai #}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}}  alert-dismissible fade show" role="alert">
+  <strong>Message:</strong> {{message}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+    {% endfor %}
+    </ul> 
+  {% endif %}
+{% endwith %}
+<h1 class='text-center'>Welcome To My Blog</h1>
+<img src="{{ url_for('static', filename='img/blog.jpg') }}"alt="" style="width:70vw; height:85vh;" class="my-3">
+{# ye islye likhe hai qki hmara 2nd blog 1st blog ke niche aa rha tha islye row m lane ke lye #}
+<div class="row mb-2">
+{% for blog in data %}
+<div class="col-md-6 my-5 my-4">
+  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" >
+    <div class="col p-4 d-flex flex-column position-static">
+      
+      <h3 class="mb-0">{{blog.title}}</h3>
+      <div class="mb-1 text-body-secondary">{{blog.pub_date}}</div>
+     {# ye card text wrapper islye likhe hai ki agr hum jyda text daal dye content mai toh block ka size increase na ho jo v text overflow hoga vo hidden ho jyga #}
+      <div class="card-text-wrapper" style="max-height: 100px; overflow-y: hidden;">
+      <p class="card-text mb-auto">{{blog.content}}</p>
+    </div>
+      <h4 class="mb-0 my-5">Author:-{{blog.author}}</h4>
+      <a href="/blog_detail/{{blog.blog_id}}" class="icon-link gap-1 icon-link-hover stretched-link btn btn-primary" style="padding: 
+        13px 40px; width: 33vw; height: 10vh;">
+        Continue reading
+        <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+       </a>
+      
+    </div>
+  </div>
+ </div>
+{% endfor %}
+ 
+</div>
+{% endblock body %}    
+
+{# iska mtlab jab user login krga jo username se vo naam
+home page pe show krga #} {# {{current_user.username}} #}
